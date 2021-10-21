@@ -2,14 +2,14 @@
   <v-sheet>
     <v-data-table
       :headers="headers"
-      :items="brands"
+      :items="merchants"
       class="elevation-1"
     >
       <template v-slot:top>
         <v-toolbar
           flat
         >
-          <v-toolbar-title>Brands</v-toolbar-title>
+          <v-toolbar-title>Merchants</v-toolbar-title>
           <v-divider
             class="mx-4"
             inset
@@ -20,17 +20,17 @@
             v-model="dialog"
             max-width="500px"
           >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                color="primary"
-                dark
-                class="mb-2"
-                v-bind="attrs"
-                v-on="on"
-              >
-                Add Brand
-              </v-btn>
-            </template>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          color="primary"
+                          dark
+                          class="mb-2"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          Add Merchant
+                        </v-btn>
+                      </template>
             <v-card>
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
@@ -45,8 +45,8 @@
                       md="12"
                     >
                       <v-text-field
-                        v-model="editedItem.title"
-                        label="Brand title"
+                        v-model="editedItem.name"
+                        label="Merchant Name"
                       ></v-text-field>
                     </v-col>
                     <v-col
@@ -55,8 +55,8 @@
                       md="12"
                     >
                       <v-text-field
-                        v-model="editedItem.description"
-                        label="Description"
+                        v-model="editedItem.shop"
+                        label="Shop"
                       ></v-text-field>
                     </v-col>
                     <v-col
@@ -65,11 +65,20 @@
                       md="12"
                     >
                       <v-text-field
-                        v-model="editedItem.logo"
-                        label="Logo Upload"
+                        v-model="editedItem.location"
+                        label="Location"
                       ></v-text-field>
                     </v-col>
-
+                    <v-col
+                      cols="12"
+                      sm="12"
+                      md="12"
+                    >
+                      <v-text-field
+                        v-model="editedItem.contact"
+                        label="Contact"
+                      ></v-text-field>
+                    </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
@@ -129,44 +138,44 @@
 <script>
 import {mapGetters} from "vuex";
 
-
 export default {
-  name: "Brands",
+  name: "Merchant",
   data: () => ({
     dialog: false,
     dialogDelete: false,
     headers: [
       {
-        text: 'Title',
+        text: 'Merchant Name',
         align: 'start',
         sortable: false,
-        value: 'title',
+        value: 'name',
       },
-      { text: 'Description', value: 'description' },
-      { text: 'Logo', value: 'logo' },
+      { text: 'Shop Name', value: 'shop', sortable: false  },
+      { text: 'Contact', value: 'contact', sortable: false  },
+      { text: 'Location', value: 'location', sortable: false  },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
     editedIndex: -1,
     editedItem: {
-      title: null,
-      description: null,
-      logo: null,
-
+      name: null,
+      shop: null,
+      contact: null,
+      location: null,
     },
     defaultItem: {
-      title: '',
-      description: 0,
-      logo: 0,
-
+      name: '',
+      shop: '',
+      contact: '',
+      location:'',
     },
   }),
 
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'New Brand' : 'Edit Brand'
+      return this.editedIndex === -1 ? 'New Merchant' : 'Edit Merchant'
     },
     ...mapGetters({
-      brands: 'brands/brands'
+      merchants: 'brands/merchants'
     }),
   },
 
@@ -180,12 +189,14 @@ export default {
   },
 
   created () {
-    this.fetchBrands();
+    this.fetchMerchants()
+    console.log("fetching merchants")
+    console.log(this.merchants)
   },
 
   methods: {
-    async fetchBrands(){
-      await this.$store.dispatch('brands/fetchBrands');
+    async fetchMerchants(){
+      await this.$store.dispatch('brands/fetchMerchants');
     },
 
     editItem (item) {
@@ -221,15 +232,15 @@ export default {
       })
     },
 
-   async save () {
+    async save () {
       let data = {
-        'title': this.editedItem.title,
-        'description': this.editedItem.description,
-        'logo': this.editedItem.logo,
-
+        'name': this.editedItem.name,
+        'shop': this.editedItem.shop,
+        'location': this.editedItem.location,
+        'contact': this.editedItem.contact
       }
       console.log(data)
-      await this.$store.dispatch('brands/addBrand', data);
+      await this.$store.dispatch('brands/addMerchant', data);
       this.close()
     },
   }

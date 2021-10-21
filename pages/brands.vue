@@ -6,8 +6,18 @@
   </v-row>
 </template>
 <script>
+import {mapMutations, mapGetters, mapActions} from 'vuex'
+
 import Brands from "../components/Brands";
+
 export default {
-  components: {Brands}
+  components: {Brands},
+  computed: {
+
+  },
+  created() {
+  },
+  methods: {
+  }
 }
 </script>

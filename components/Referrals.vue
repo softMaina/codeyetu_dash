@@ -2,8 +2,7 @@
 <v-sheet>
   <v-data-table
     :headers="headers"
-    :items="desserts"
-    sort-by="calories"
+    :items=referrals
     class="elevation-1"
   >
     <template v-slot:top>
@@ -21,17 +20,17 @@
           v-model="dialog"
           max-width="500px"
         >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="primary"
-              dark
-              class="mb-2"
-              v-bind="attrs"
-              v-on="on"
-            >
-              New Item
-            </v-btn>
-          </template>
+<!--          <template v-slot:activator="{ on, attrs }">-->
+<!--            <v-btn-->
+<!--              color="primary"-->
+<!--              dark-->
+<!--              class="mb-2"-->
+<!--              v-bind="attrs"-->
+<!--              v-on="on"-->
+<!--            >-->
+<!--              New Item -->
+<!--            </v-btn>-->
+<!--          </template>-->
           <v-card>
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
@@ -141,19 +140,14 @@
         mdi-delete
       </v-icon>
     </template>
-    <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
-    </template>
+
   </v-data-table>
 </v-sheet>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: "Referrals",
   data: () => ({
@@ -164,15 +158,13 @@ export default {
         text: 'Referrer',
         align: 'start',
         sortable: false,
-        value: 'name',
+        value: 'referrer',
       },
-      { text: 'Referred Contact', value: 'calories', sortable: false  },
-      { text: 'Product', value: 'fat', sortable: false  },
-      { text: 'Date', value: 'carbs', sortable: false  },
-      { text: 'Status', value: 'protein', sortable: false  },
+      { text: 'Referred Contact', value: 'referred_phone_no', sortable: false  },
+      { text: 'Coupon', value: 'coupon_code', sortable: false  },
+      { text: 'Referred', value: 'referred_name', sortable: false  },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
-    desserts: [],
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -194,6 +186,9 @@ export default {
     formTitle () {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
+    ...mapGetters({
+      referrals: 'brands/referrals'
+    }),
   },
 
   watch: {
@@ -206,21 +201,12 @@ export default {
   },
 
   created () {
-    this.initialize()
+   this.fetchReferrals()
   },
 
   methods: {
-    initialize () {
-      this.desserts = [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-        },
-
-      ]
+    async fetchReferrals(){
+      await this.$store.dispatch('brands/fetchReferals');
     },
 
     editItem (item) {

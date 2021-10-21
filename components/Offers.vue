@@ -1,4 +1,6 @@
 <template>
+
+  <v-col cols="4" >
       <v-card class="d-flex flex-column pa-2 ma-2 rounded-lg"
               tile>
         <v-img
@@ -16,11 +18,48 @@
           <v-btn elevation="2" color="secondary">Delete</v-btn>
         </v-card-actions>
       </v-card>
+  </v-col>
+
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
-  name: "Offers"
+  name: "Offers",
+  data: () => ({
+    editedItem: {
+      caption: null,
+      offer_rate: null,
+      offer_target: null,
+      c_to_b: null,
+      brand_id: null
+    },
+  }),
+  created() {
+    this.fetchOffers();
+  },
+  computed: {
+    ...mapGetters({
+      offers: 'brands/offers'
+    }),
+  },
+  methods: {
+    async fetchOffers(){
+      await this.$store.dispatch('brands/fetchOffers');
+    },
+    async save () {
+      let data = {
+        'name': this.editedItem.name,
+        'shop': this.editedItem.shop,
+        'location': this.editedItem.location,
+        'contact': this.editedItem.contact
+      }
+      console.log(data)
+      await this.$store.dispatch('brands/addMerchant', data);
+      this.close()
+    },
+  }
 }
 </script>
 
