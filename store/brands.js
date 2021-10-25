@@ -35,44 +35,44 @@ export const mutations = {
 
 export const actions = {
   async fetchOffers({commit, dispatch}) {
-    await this.$axios.get('http://192.168.100.6:5000/api/offers').then((res)=>{
+    await this.$axios.get('http://159.223.28.235:8080/api/offers').then((res)=>{
       commit({
         type: 'setOffers',
-        offers: res.data
+        offers: res.data["results"]
       })
     })
   },
 
   async fetchReferals({commit, dispatch}) {
-    await this.$axios.get('http://192.168.100.6:5000/api/referrals').then((res)=>{
+    await this.$axios.get('http://159.223.28.235:8080/api/referrals').then((res)=>{
       commit({
         type: 'setReferrals',
-        referrals: res.data
+        referrals: res.data["results"]
       })
     })
   },
 
   async fetchBrands({commit, dispatch}) {
-    await this.$axios.get('http://192.168.100.6:5000/api/brands').then((res)=>{
+    await this.$axios.get('http://159.223.28.235:8080/api/brands').then((res)=>{
       commit({
         type: 'setBrands',
-        brands: res.data
+        brands: res.data["results"]
       })
     })
   },
 
   async fetchMerchants({commit, dispatch}) {
-    await this.$axios.get('http://localhost:5000/api/merchants').then((res)=>{
+    await this.$axios.get('http://159.223.28.235:8080/api/merchants').then((res)=>{
       console.log(res)
       commit({
         type: 'setMerchants',
-        merchants: res.data
+        merchants: res.data["results"]
       })
     })
   },
 
   async addMerchant({commit, dispatch}, data){
-    await this.$axios.post('http://localhost:5000/api/merchants',data).then((res)=>{
+    await this.$axios.post('http://159.223.28.235:8080/api/merchants',data).then((res)=>{
       if(res.status === 201){
         this.dispatch('brands/fetchMerchants')
       }
@@ -81,7 +81,7 @@ export const actions = {
   },
 
   async addOffer({commit, dispatch}, data){
-    await this.$axios.post('http://localhost:5000/api/offers',data).then((res)=>{
+    await this.$axios.post('http://159.223.28.235:8080/api/offers',data).then((res)=>{
       if(res.status === 201){
         this.dispatch('brands/fetchOffers')
       }
@@ -90,7 +90,7 @@ export const actions = {
   },
 
   async addBrand({commit, dispatch}, data){
-    await this.$axios.post('http://localhost:5000/api/brands',data).then((res)=>{
+    await this.$axios.post('http://159.223.28.235:8080/api/brands',data).then((res)=>{
       console.log(res.status)
       if(res.status === 201){
        this.dispatch('brands/fetchBrands')

@@ -22,6 +22,10 @@ export default {
     ]
   },
 
+  router: {
+    middleware: ['auth']
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],
@@ -41,11 +45,40 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
+
+  auth: {
+    strategies: {
+      local: {
+        tokenRequired: true,
+        token: {
+          property: 'access_token',
+          required: true,
+          type: 'Bearer'
+        },
+        user: {
+          property: 'data',
+        },
+        endpoints: {
+          register: {url: '/auth/register', method: 'post'},
+          login: {url: '/auth/login', method: 'post'},
+          logout: {url: '/auth/logout', method: 'post'},
+          user: {url: '/auth/status', method: 'get'}
+        }
+      }
+    },
+    redirect: {
+      login: '/',
+      logout: '/',
+      home: '/home'
+    }
+  },
 
   axios: {
     // proxy: true
+    baseURL: 'http://159.223.28.235:8080',
   },
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -63,9 +96,9 @@ export default {
           success: colors.green.accent3
         },
         light: {
-          primary: "#222966",
+          primary:'#cc1335',
           accent: colors.amber.darken4,
-          secondary: colors.amber.darken3,
+          secondary: '#f8a932',
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,

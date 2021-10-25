@@ -85,7 +85,7 @@ export default {
         {
           icon: 'mdi-apps',
           title: 'Home',
-          to: '/'
+          to: '/home'
         },
         {
           icon: 'mdi-chart-bubble',
