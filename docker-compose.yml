@@ -1,0 +1,7 @@
+version: "3.7"
+services:
+  codeyetu:
+    container_name: dashboard
+    build: .
+    ports:
+      - "4000:80"
