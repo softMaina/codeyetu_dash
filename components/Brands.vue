@@ -64,10 +64,24 @@
                       sm="12"
                       md="12"
                     >
-                      <v-text-field
+                      <v-select
+                        v-model="editedItem.category_id"
+                        :items="brand_categories"
+                        :item-text="'title'"
+                        :item-value="'id'"
+                        label="Categories"
+                      ></v-select>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      sm="12"
+                      md="12"
+                    >
+                      <v-file-input
+                        truncate-length="15"
+                        label="Upload Image"
                         v-model="editedItem.logo"
-                        label="Logo Upload"
-                      ></v-text-field>
+                      ></v-file-input>
                     </v-col>
 
                   </v-row>
@@ -151,6 +165,7 @@ export default {
       title: null,
       description: null,
       logo: null,
+      category_id: null
 
     },
     defaultItem: {
@@ -166,7 +181,8 @@ export default {
       return this.editedIndex === -1 ? 'New Brand' : 'Edit Brand'
     },
     ...mapGetters({
-      brands: 'brands/brands'
+      brands: 'brands/brands',
+      brand_categories: 'brands/brand_categories',
     }),
   },
 
@@ -186,6 +202,7 @@ export default {
   methods: {
     async fetchBrands(){
       await this.$store.dispatch('brands/fetchBrands');
+      await this.$store.dispatch('brands/fetchCategories');
     },
 
     editItem (item) {
@@ -222,14 +239,26 @@ export default {
     },
 
    async save () {
-      let data = {
+      let data = JSON.stringify({
         'title': this.editedItem.title,
         'description': this.editedItem.description,
-        'logo': this.editedItem.logo,
+        'category_id':this.editedItem.category_id
+      })
 
-      }
-      console.log(data)
-      await this.$store.dispatch('brands/addBrand', data);
+     if (this.editedItem.logo) {
+       let formData = new FormData();
+
+       // files
+       formData.append("file", this.editedItem.logo, this.editedItem.logo.name);
+
+
+       formData.append("data", data);
+       console.log(data)
+       await this.$store.dispatch('brands/addBrand', formData);
+     } else {
+       console.log("You must upload a logo");
+     }
+
       this.close()
     },
   }

@@ -90,7 +90,7 @@ export default {
         {
           icon: 'mdi-chart-bubble',
           title: 'Brand Categories',
-          to: '/brands'
+          to: '/categories'
         },
         {
           icon: 'mdi-chart-bubble',

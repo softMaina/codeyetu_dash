@@ -3,7 +3,8 @@ export const state = () => ({
   brands: [],
   referrals: [],
   clicked_offer: null,
-  merchants: []
+  merchants: [],
+  brand_categories: []
 })
 
 export const getters = {
@@ -12,6 +13,7 @@ export const getters = {
   brands: state => state.brands,
   referrals: state => state.referrals,
   merchants: state => state.merchants,
+  brand_categories: state => state.brand_categories
 }
 
 export const mutations = {
@@ -29,6 +31,9 @@ export const mutations = {
   },
   setMerchants(state, payload){
     state.merchants = payload.merchants
+  },
+  setCategories(state, payload){
+    state.brand_categories = payload.brand_categories
   }
 
 }
@@ -40,6 +45,17 @@ export const actions = {
         type: 'setOffers',
         offers: res.data["results"]
       })
+    })
+  },
+
+  async fetchCategories({commit, dispatch}) {
+    await this.$axios.get('/api/brand/categories').then((res)=>{
+
+      commit({
+        type: 'setCategories',
+        brand_categories: res.data["results"]
+      })
+
     })
   },
 
@@ -94,6 +110,15 @@ export const actions = {
       console.log(res.status)
       if(res.status === 201){
        this.dispatch('brands/fetchBrands')
+      }
+
+    })
+  },
+  async addBrandCategory({commit, dispatch}, data){
+    await this.$axios.post('/api/brand/categories',data).then((res)=>{
+      console.log(res.status)
+      if(res.status === 201){
+        this.dispatch('brands/fetchCategories')
       }
 
     })
