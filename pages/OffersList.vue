@@ -24,14 +24,27 @@
                 dark
               >Add Offer</v-toolbar>
               <v-card-text>
-                <v-row>
+                <v-row class="mt-4">
 
                     <v-select
                       :items="brands"
+                      name="brand"
+                      item-text="title"
+                      item-value="brand_id"
                       v-model="editedItem.brand_id"
                       label="Brand With Offer"
                       outlined
                     ></v-select>
+
+                </v-row>
+                <v-row>
+
+                  <v-text-field
+                    v-model="editedItem.discount"
+                    label="Discount"
+
+                    outlined
+                  ></v-text-field>
 
                 </v-row>
                 <v-row>
@@ -91,7 +104,7 @@
                   tile height="450" width="450">
             <v-img
               height="200" width="200" aspect-ratio="16/9" contain
-              :src=offer.brand.logo
+              :src="`${$axios.defaults.baseURL}` + offer.brand.logo"
             ></v-img>
             <v-card-text justify="center" align="center">
               <p class="text-justify">{{offer.caption}}</p>
@@ -118,9 +131,9 @@ export default {
   components: {},
   data: () => ({
     dialog: false,
-    items: ['safaricom'],
     editedItem: {
       caption: null,
+      discount: null,
       offer_rate: null,
       offer_target: null,
       c_to_b: null,
