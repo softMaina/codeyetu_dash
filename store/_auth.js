@@ -41,22 +41,16 @@ export const mutations = {
 
 
 export const actions = {
-  async signup({dispatch, commit}, data) {
-    await this.$axios.post('/auth/register', data).then((res) => {
-      let accessToken = res.data.auth_token
-      localStorage.setItem("bearerToken", accessToken)
-      commit('SET_BEARER_TOKEN', accessToken)
-      this.$auth.setUserToken(accessToken)
-      dispatch('get_profile')
-    })
-  },
+
   async login({dispatch, commit}, data) {
     await this.$axios.post('/auth/login', data).then((res) => {
       let accessToken = res.data.auth_token
-      localStorage.setItem("bearerToken", accessToken);
-      commit('SET_BEARER_TOKEN', accessToken);
-      this.$auth.setUserToken(accessToken)
-      dispatch('get_profile');
+      if(res.data.admin === true){
+        localStorage.setItem("bearerToken", accessToken);
+        commit('SET_BEARER_TOKEN', accessToken);
+        this.$auth.setUserToken(accessToken)
+        dispatch('get_profile');
+      }
     })
   },
   async get_profile({dispatch, commit}) {
