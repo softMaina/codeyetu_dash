@@ -45,12 +45,13 @@ export const actions = {
   async login({dispatch, commit}, data) {
     await this.$axios.post('/auth/login', data).then((res) => {
       let accessToken = res.data.auth_token
-      if(res.data.admin === true){
+      console.log(res.data)
+
         localStorage.setItem("bearerToken", accessToken);
         commit('SET_BEARER_TOKEN', accessToken);
         this.$auth.setUserToken(accessToken)
         dispatch('get_profile');
-      }
+
     })
   },
   async get_profile({dispatch, commit}) {
