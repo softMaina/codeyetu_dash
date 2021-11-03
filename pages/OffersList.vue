@@ -125,7 +125,7 @@
 <script>
 
 import {mapGetters} from "vuex";
-import brands from "./brands";
+
 export default {
   name: "OffersList",
   components: {},
@@ -167,7 +167,7 @@ export default {
     async save () {
       let data = {
         'caption': this.editedItem.caption,
-        'brand_id': 1,
+        'brand_id': this.editedItem.brand_id,
         'offer_rate': parseInt(this.editedItem.offer_rate),
         'offer_target': parseInt(this.editedItem.offer_target),
         "c_to_b":true
