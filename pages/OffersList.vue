@@ -75,12 +75,22 @@
                     outlined
                   ></v-text-field>
                 </v-row>
+                <v-row>
+                  <v-col cols="6">
+                    <v-switch
+                      v-model="editedItem.c_to_b"
+                      label="Is C2B"
+                    ></v-switch>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-switch
+                      v-model="editedItem.available"
+                      label="Make available immediately"
+                    ></v-switch>
 
+                  </v-col>
 
-<!--                <v-row>-->
-
-<!--                  <v-switch-->
-<!--                </v-row>-->
+                </v-row>
 
               </v-card-text>
               <v-card-actions class="justify-end">
@@ -112,7 +122,7 @@
             <v-card-actions>
               <v-btn outlined elevation="2" color="primary">Edit</v-btn>
               <v-spacer></v-spacer>
-              <v-btn elevation="2" color="secondary">Delete</v-btn>
+              <v-btn elevation="2" @click.native="deleteOffer(offer)" color="secondary">Delete</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -136,8 +146,9 @@ export default {
       discount: null,
       offer_rate: null,
       offer_target: null,
-      c_to_b: null,
-      brand_id: null
+      c_to_b: true,
+      brand_id: null,
+      available: true,
     },
   }),
   created() {
@@ -170,12 +181,18 @@ export default {
         'brand_id': this.editedItem.brand_id,
         'offer_rate': parseInt(this.editedItem.offer_rate),
         'offer_target': parseInt(this.editedItem.offer_target),
-        "c_to_b":true
+        "c_to_b": this.editedItem.c_to_b,
+        'discount': this.editedItem.discount
       }
       console.log(data)
       await this.$store.dispatch('brands/addOffer', data);
       this.close()
     },
+
+    async deleteOffer(offer){
+
+      await this.$store.dispatch('brands/deleteOffer', offer.offer_id)
+    }
   }
 }
 </script>

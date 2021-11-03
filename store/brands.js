@@ -122,5 +122,25 @@ export const actions = {
       }
 
     })
+  },
+  async deleteOffer({commit, dispatch}, id){
+    let url = '/api/offers/' + id;
+    await this.$axios.delete(url).then((res)=>{
+      console.log(res.status)
+      if(res.status === 200){
+        this.dispatch('brands/fetchOffers')
+      }
+
+    })
+  },
+  async deleteBrand({commit, dispatch}, id){
+    let url = '/api/brands/' + id;
+    await this.$axios.delete(url).then((res)=>{
+      console.log(res.status)
+      if(res.status === 200){
+        this.dispatch('brands/fetchBrands')
+      }
+
+    })
   }
 }

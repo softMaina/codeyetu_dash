@@ -130,7 +130,7 @@
         </v-icon>
         <v-icon
           small
-          @click="deleteItem(item)"
+          @click="deleteBrand(item.brand_id)"
         >
           mdi-delete
         </v-icon>
@@ -261,6 +261,10 @@ export default {
 
       this.close()
     },
+
+    async deleteBrand(id){
+      await this.$store.dispatch('brands/deleteBrand', id)
+    }
   }
 }
 </script>
