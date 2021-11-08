@@ -1,40 +1,49 @@
 <template>
-  <v-layout justify-center align-center>
-      <v-card class="rounded-xl" width="30%"  height="30%" elevation="2">
-        <v-card-title class="secondary text-center">
-          Admin Login
+
+  <v-img height="100%" src="images/bg.png" class="align-center" fit aspect-ratio="16/9">
+    <div class="d-flex justify-center ">
+      <v-card class="rounded-lg thin-poppins" width="30%" height="45%" elevation="5">
+        <v-card-title class="secondary text-center justify-center">
+          <div class="white--text ">
+            Admin Login
+          </div>
+
         </v-card-title>
-      <v-card-text>
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="E-mail"
-          required
-        ></v-text-field>
+        <v-card-text>
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="E-mail"
+            required
+          ></v-text-field>
 
-        <v-text-field
-          type="password"
-          v-model="password"
-          label="Password"
-          required
-        ></v-text-field>
+          <v-text-field
+            type="password"
+            v-model="password"
+            label="Password"
+            required
+          ></v-text-field>
 
-        <v-btn
-          height="50"
-          color="primary"
-          class="mr-4"
-          block
-          @click="login"
-        >
-          Login
-        </v-btn>
+          <v-btn
+            height="50"
+            color="primary"
+            class="mr-4"
+            block
+            @click="login"
+          >
+            <div class="regular-poppins">
+              Login
+            </div>
+
+          </v-btn>
 
 
-      </v-card-text>
+        </v-card-text>
       </v-card>
+    </div>
+  </v-img>
 
 
-  </v-layout>
 </template>
 <script>
 
@@ -55,18 +64,16 @@ export default {
     ],
   }),
   computed: {
-    ...mapGetters({
-
-    })
+    ...mapGetters({})
   },
   methods: {
-    validate () {
+    validate() {
       this.$refs.form.validate()
     },
-    reset () {
+    reset() {
       this.$refs.form.reset()
     },
-    resetValidation () {
+    resetValidation() {
       this.$refs.form.resetValidation()
     },
     async login() {
@@ -82,3 +89,6 @@ export default {
 
 }
 </script>
+<style scoped>
+
+</style>

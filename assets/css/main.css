@@ -1,0 +1,24 @@
+.regular-poppins{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+.medium-poppins{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+.light-poppins{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+.thin-poppins{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 100;
+}
+.text-info-headers{
+  font-size: 28px;
+}
+
+.text-info-sub-headers{
+  font-size: 23px;
+}
+

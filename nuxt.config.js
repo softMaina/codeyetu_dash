@@ -28,6 +28,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/css/main'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -41,6 +42,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/google-fonts',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -79,7 +81,6 @@ export default {
   axios: {
     // proxy: true
     baseURL: 'https://api.codeyetu.com'
-    //baseURL: 'http://159.223.28.235:8080',
     // baseURL: 'http://localhost:5000',
   },
 
@@ -116,5 +117,15 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+  googleFonts: {
+    preconnect: true,
+    display: 'swap',
+    families: {
+      'Poppins': true,
+      Poppins: {
+        wght: [300, 400,500],
+      },
+    }
   }
 }
