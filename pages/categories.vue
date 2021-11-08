@@ -195,7 +195,7 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.brand_categories.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },

@@ -22,7 +22,7 @@
 
           </template>
           <template v-slot:default="dialog">
-            <v-card>
+            <v-card class="thin-poppins">
               <v-toolbar
                 color="primary"
                 dark
@@ -125,7 +125,7 @@
             </v-card-text>
             <v-card-actions style="width: 100%;">
               <v-row >
-              <v-btn outlined elevation="0" large color="secondary">
+              <v-btn outlined elevation="0" large color="secondary"  @click="editItem(offer)">
                 <div class="medium-poppins">
                 Edit
                 </div>
@@ -180,6 +180,24 @@ export default {
       await this.$store.dispatch('brands/fetchBrands');
       console.log(this.offers);
     },
+
+    editItem(item) {
+      this.editedIndex = this.offers.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialog = true
+    },
+
+    deleteItem(item) {
+      this.editedIndex = this.offers.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialogDelete = true
+    },
+
+    deleteItemConfirm() {
+      this.offers.splice(this.editedIndex, 1)
+      this.closeDelete()
+    },
+
 
     close () {
       this.dialog = false

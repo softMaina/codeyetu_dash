@@ -33,7 +33,7 @@
                 </div>
               </v-btn>
             </template>
-            <v-card>
+            <v-card class="thin-poppins">
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
@@ -208,7 +208,7 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.brands.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
