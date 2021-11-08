@@ -8,6 +8,10 @@
       fixed
       app
     >
+      <div style="height:60px;">
+        <v-img src="images/logo.png"></v-img>
+      </div>
+      <v-divider></v-divider>
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -15,6 +19,7 @@
           :to="item.to"
           router
           exact
+          class="regular-poppins"
         >
           <v-list-item-action>
             <v-icon color="#f5ad33">{{ item.icon }}</v-icon>
@@ -79,39 +84,44 @@ export default {
   data () {
     return {
       clipped: false,
-      drawer: false,
-      fixed: false,
+      drawer: true,
+      fixed: true,
       items: [
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-desktop-mac-dashboard',
           title: 'Home',
           to: '/home'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-select-group',
           title: 'Brand Categories',
           to: '/categories'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-chart-ppf',
           title: 'Brands',
           to: '/brands'
         },
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-tag',
           title: 'Offers',
           to: '/OffersList'
         },
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-store-marker-outline',
           title: 'Merchants',
           to: '/merchant'
         },
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-message-flash-outline',
           title: 'Referrals',
           to: '/referrals'
         },
+        {
+          icon: 'mdi-account-group-outline',
+          title: 'Users',
+          to: '/users'
+        }
       ],
       miniVariant: false,
       right: true,

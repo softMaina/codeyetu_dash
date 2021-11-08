@@ -3,7 +3,7 @@
     <v-data-table
       :headers="headers"
       :items="merchants"
-      class="elevation-1"
+      class="elevation-1 thin-poppins"
     >
       <template v-slot:top>
         <v-toolbar
@@ -20,17 +20,19 @@
             v-model="dialog"
             max-width="500px"
           >
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                          color="primary"
-                          dark
-                          class="mb-2"
-                          v-bind="attrs"
-                          v-on="on"
-                        >
-                          Add Merchant
-                        </v-btn>
-                      </template>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="primary"
+                dark
+                class="mb-2"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <div class="medium-poppins">
+                  Add Merchant
+                </div>
+              </v-btn>
+            </template>
             <v-card>
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
@@ -150,10 +152,10 @@ export default {
         sortable: false,
         value: 'name',
       },
-      { text: 'Shop Name', value: 'shop', sortable: false  },
-      { text: 'Contact', value: 'contact', sortable: false  },
-      { text: 'Location', value: 'location', sortable: false  },
-      { text: 'Actions', value: 'actions', sortable: false },
+      {text: 'Shop Name', value: 'shop', sortable: false},
+      {text: 'Contact', value: 'contact', sortable: false},
+      {text: 'Location', value: 'location', sortable: false},
+      {text: 'Actions', value: 'actions', sortable: false},
     ],
     editedIndex: -1,
     editedItem: {
@@ -166,12 +168,12 @@ export default {
       name: '',
       shop: '',
       contact: '',
-      location:'',
+      location: '',
     },
   }),
 
   computed: {
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'New Merchant' : 'Edit Merchant'
     },
     ...mapGetters({
@@ -180,43 +182,43 @@ export default {
   },
 
   watch: {
-    dialog (val) {
+    dialog(val) {
       val || this.close()
     },
-    dialogDelete (val) {
+    dialogDelete(val) {
       val || this.closeDelete()
     },
   },
 
-  created () {
+  created() {
     this.fetchMerchants()
     console.log("fetching merchants")
     console.log(this.merchants)
   },
 
   methods: {
-    async fetchMerchants(){
+    async fetchMerchants() {
       await this.$store.dispatch('brands/fetchMerchants');
     },
 
-    editItem (item) {
+    editItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
-    deleteItem (item) {
+    deleteItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
-    deleteItemConfirm () {
+    deleteItemConfirm() {
       this.desserts.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
-    close () {
+    close() {
       this.dialog = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -224,7 +226,7 @@ export default {
       })
     },
 
-    closeDelete () {
+    closeDelete() {
       this.dialogDelete = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -232,7 +234,7 @@ export default {
       })
     },
 
-    async save () {
+    async save() {
       let data = {
         'name': this.editedItem.name,
         'shop': this.editedItem.shop,

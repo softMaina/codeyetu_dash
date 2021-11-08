@@ -13,7 +13,11 @@
                 color="primary"
                 v-bind="attrs"
                 v-on="on"
-              >Add Offer</v-btn>
+              >
+                <div class="medium-poppins">
+                Post Offer
+                </div>
+              </v-btn>
             </v-row>
 
           </template>
@@ -110,19 +114,29 @@
     </v-row>
     <v-row justify="center" align="center">
         <v-col cols="4" v-for="offer in offers" :key="offer.offer_id" >
-          <v-card class="d-flex flex-column pa-2 ma-2 rounded-lg"
+          <v-card elevation="5" class="d-flex flex-column justify-center align-center pa-5 ma-5 rounded-lg"
                   tile height="450" width="450">
             <v-img
               height="200" width="200" aspect-ratio="16/9" contain
               :src="`${$axios.defaults.baseURL}` + offer.brand.logo"
             ></v-img>
             <v-card-text justify="center" align="center">
-              <p class="text-justify">{{offer.caption}}</p>
+              <p class="text-justify medium-poppins">{{offer.caption}}</p>
             </v-card-text>
-            <v-card-actions>
-              <v-btn outlined elevation="2" color="primary">Edit</v-btn>
+            <v-card-actions style="width: 100%;">
+              <v-row >
+              <v-btn outlined elevation="0" large color="secondary">
+                <div class="medium-poppins">
+                Edit
+                </div>
+              </v-btn>
               <v-spacer></v-spacer>
-              <v-btn elevation="2" @click.native="deleteOffer(offer)" color="secondary">Delete</v-btn>
+              <v-btn elevation="0" large @click.native="deleteOffer(offer)" color="primary">
+                <div class="medium-poppins">
+                Delete
+                </div>
+              </v-btn>
+              </v-row>
             </v-card-actions>
           </v-card>
         </v-col>

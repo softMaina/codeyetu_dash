@@ -3,7 +3,7 @@
     <v-data-table
       :headers="headers"
       :items="brand_categories"
-      class="elevation-1"
+      class="elevation-1 thin-poppins"
     >
       <template v-slot:top>
         <v-toolbar
@@ -28,10 +28,12 @@
                 v-bind="attrs"
                 v-on="on"
               >
-                Add Brand Category
+                <div class="medium-poppins">
+                  Add Brand Category
+                </div>
               </v-btn>
             </template>
-            <v-card>
+            <v-card class="thin-poppins">
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
@@ -67,7 +69,7 @@
                     >
                       <v-file-input
                         truncate-length="15"
-                        label="Upload Image"
+                        label="Upload Category Image"
                         v-model="editedItem.logo"
                       ></v-file-input>
                     </v-col>
@@ -144,9 +146,9 @@ export default {
         sortable: false,
         value: 'title',
       },
-      { text: 'Description', value: 'description' },
-      { text: 'Background Image', value: 'image' },
-      { text: 'Actions', value: 'actions', sortable: false },
+      {text: 'Description', value: 'description'},
+      {text: 'Background Image', value: 'image'},
+      {text: 'Actions', value: 'actions', sortable: false},
     ],
     editedIndex: -1,
     editedItem: {
@@ -165,8 +167,8 @@ export default {
   }),
 
   computed: {
-    formTitle () {
-      return this.editedIndex === -1 ? 'New Brand' : 'Edit Brand'
+    formTitle() {
+      return this.editedIndex === -1 ? 'New Brand Category' : 'Edit Brand Category'
     },
     ...mapGetters({
       brand_categories: 'brands/brand_categories',
@@ -174,42 +176,42 @@ export default {
   },
 
   watch: {
-    dialog (val) {
+    dialog(val) {
       val || this.close()
     },
-    dialogDelete (val) {
+    dialogDelete(val) {
       val || this.closeDelete()
     },
   },
 
-  created () {
+  created() {
     this.fetchBrands();
   },
 
   methods: {
-    async fetchBrands(){
+    async fetchBrands() {
       await this.$store.dispatch('brands/fetchBrands');
       await this.$store.dispatch('brands/fetchCategories');
     },
 
-    editItem (item) {
+    editItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
-    deleteItem (item) {
+    deleteItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
-    deleteItemConfirm () {
+    deleteItemConfirm() {
       this.desserts.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
-    close () {
+    close() {
       this.dialog = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -217,7 +219,7 @@ export default {
       })
     },
 
-    closeDelete () {
+    closeDelete() {
       this.dialogDelete = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -225,7 +227,7 @@ export default {
       })
     },
 
-    async save () {
+    async save() {
       let data = JSON.stringify({
         'title': this.editedItem.title,
         'description': this.editedItem.description,

@@ -3,7 +3,7 @@
     <v-data-table
       :headers="headers"
       :items="brands"
-      class="elevation-1"
+      class="elevation-1 thin-poppins"
     >
       <template v-slot:top>
         <v-toolbar
@@ -28,7 +28,9 @@
                 v-bind="attrs"
                 v-on="on"
               >
-                Add Brand
+                <div class="medium-poppins">
+                  Add Brand
+                </div>
               </v-btn>
             </template>
             <v-card>
@@ -156,9 +158,9 @@ export default {
         sortable: false,
         value: 'title',
       },
-      { text: 'Description', value: 'description' },
-      { text: 'Logo', value: 'logo' },
-      { text: 'Actions', value: 'actions', sortable: false },
+      {text: 'Description', value: 'description'},
+      {text: 'Logo', value: 'logo'},
+      {text: 'Actions', value: 'actions', sortable: false},
     ],
     editedIndex: -1,
     editedItem: {
@@ -177,7 +179,7 @@ export default {
   }),
 
   computed: {
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'New Brand' : 'Edit Brand'
     },
     ...mapGetters({
@@ -187,42 +189,42 @@ export default {
   },
 
   watch: {
-    dialog (val) {
+    dialog(val) {
       val || this.close()
     },
-    dialogDelete (val) {
+    dialogDelete(val) {
       val || this.closeDelete()
     },
   },
 
-  created () {
+  created() {
     this.fetchBrands();
   },
 
   methods: {
-    async fetchBrands(){
+    async fetchBrands() {
       await this.$store.dispatch('brands/fetchBrands');
       await this.$store.dispatch('brands/fetchCategories');
     },
 
-    editItem (item) {
+    editItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
-    deleteItem (item) {
+    deleteItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
-    deleteItemConfirm () {
+    deleteItemConfirm() {
       this.desserts.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
-    close () {
+    close() {
       this.dialog = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -230,7 +232,7 @@ export default {
       })
     },
 
-    closeDelete () {
+    closeDelete() {
       this.dialogDelete = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -238,31 +240,31 @@ export default {
       })
     },
 
-   async save () {
+    async save() {
       let data = JSON.stringify({
         'title': this.editedItem.title,
         'description': this.editedItem.description,
-        'category_id':this.editedItem.category_id
+        'category_id': this.editedItem.category_id
       })
 
-     if (this.editedItem.logo) {
-       let formData = new FormData();
+      if (this.editedItem.logo) {
+        let formData = new FormData();
 
-       // files
-       formData.append("file", this.editedItem.logo, this.editedItem.logo.name);
+        // files
+        formData.append("file", this.editedItem.logo, this.editedItem.logo.name);
 
 
-       formData.append("data", data);
-       console.log(data)
-       await this.$store.dispatch('brands/addBrand', formData);
-     } else {
-       console.log("You must upload a logo");
-     }
+        formData.append("data", data);
+        console.log(data)
+        await this.$store.dispatch('brands/addBrand', formData);
+      } else {
+        console.log("You must upload a logo");
+      }
 
       this.close()
     },
 
-    async deleteBrand(id){
+    async deleteBrand(id) {
       await this.$store.dispatch('brands/deleteBrand', id)
     }
   }

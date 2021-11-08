@@ -3,7 +3,7 @@
   <v-data-table
     :headers="headers"
     :items=referrals
-    class="elevation-1"
+    class="elevation-1 thin-poppins"
   >
     <template v-slot:top>
       <v-toolbar

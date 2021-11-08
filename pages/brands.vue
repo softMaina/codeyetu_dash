@@ -6,18 +6,13 @@
   </v-row>
 </template>
 <script>
-import {mapMutations, mapGetters, mapActions} from 'vuex'
-
 import Brands from "../components/Brands";
 
 export default {
   components: {Brands},
-  computed: {
-
-  },
+  computed: {},
   created() {
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
