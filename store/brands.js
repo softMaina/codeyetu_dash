@@ -2,6 +2,8 @@ export const state = () => ({
   offers: [],
   brands: [],
   referrals: [],
+  users: [],
+  total: 0,
   clicked_offer: null,
   merchants: [],
   brand_categories: []
@@ -9,11 +11,13 @@ export const state = () => ({
 
 export const getters = {
   offers: state => state.offers,
+  users: state => state.users,
   clicked_offer: state => state.clicked_offer,
   brands: state => state.brands,
   referrals: state => state.referrals,
   merchants: state => state.merchants,
-  brand_categories: state => state.brand_categories
+  brand_categories: state => state.brand_categories,
+  total: state => state.total
 }
 
 export const mutations = {
@@ -34,6 +38,12 @@ export const mutations = {
   },
   setCategories(state, payload){
     state.brand_categories = payload.brand_categories
+  },
+  setUsers(state,payload){
+    state.users = payload.users
+  },
+  setTotal(state,payload){
+    state.total = payload.total
   }
 
 }
@@ -64,7 +74,12 @@ export const actions = {
       commit({
         type: 'setReferrals',
         referrals: res.data["results"]
-      })
+      });
+
+      commit({
+        type: 'setTotal',
+        total: res.data["total"]
+      });
     })
   },
 
@@ -83,6 +98,15 @@ export const actions = {
       commit({
         type: 'setMerchants',
         merchants: res.data["results"]
+      })
+    })
+  },
+  async fetchUsers({commit, dispatch}) {
+    await this.$axios.get('/api/accounts').then((res)=>{
+      console.log(res)
+      commit({
+        type: 'setUsers',
+        users: res.data["results"]
       })
     })
   },
