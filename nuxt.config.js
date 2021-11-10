@@ -81,7 +81,7 @@ export default {
   axios: {
     // proxy: true
     baseURL: 'https://api.codeyetu.com'
-    // baseURL: 'http://localhost:5000',
+    //baseURL: 'http://localhost:5000',
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
