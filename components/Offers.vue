@@ -28,12 +28,15 @@ import {mapGetters} from "vuex";
 export default {
   name: "Offers",
   data: () => ({
+    editing: false,
     editedItem: {
       caption: null,
       offer_rate: null,
       offer_target: null,
       c_to_b: null,
-      brand_id: null
+      discount: null,
+      brand_id: null,
+      is_available: null,
     },
   }),
   created() {

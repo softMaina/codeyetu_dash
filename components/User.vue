@@ -155,6 +155,9 @@ export default {
       {text: 'email', value: 'email', sortable: false},
       {text: 'phone', value: 'phone_number', sortable: false},
       {text: 'date joined', value: 'date_joined', sortable: false},
+      {text: 'is admin', value: 'admin'},
+      {text: 'active', value: 'is_active'},
+
       {text: 'Actions', value: 'actions', sortable: false},
     ],
     editedIndex: -1,

@@ -88,7 +88,7 @@
                   </v-col>
                   <v-col cols="6">
                     <v-switch
-                      v-model="editedItem.available"
+                      v-model="editedItem.is_available"
                       label="Make available immediately"
                     ></v-switch>
 
@@ -154,6 +154,7 @@ export default {
   name: "OffersList",
   components: {},
   data: () => ({
+    editing: false,
     dialog: false,
     editedItem: {
       caption: null,
@@ -162,7 +163,7 @@ export default {
       offer_target: null,
       c_to_b: true,
       brand_id: null,
-      available: true,
+      is_available: true,
     },
   }),
   created() {
@@ -182,6 +183,7 @@ export default {
     },
 
     editItem(item) {
+      this.editing = true
       this.editedIndex = this.offers.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
@@ -214,10 +216,17 @@ export default {
         'offer_rate': parseInt(this.editedItem.offer_rate),
         'offer_target': parseInt(this.editedItem.offer_target),
         "c_to_b": this.editedItem.c_to_b,
-        'discount': this.editedItem.discount
+        'discount': this.editedItem.discount,
+        'is_available': this.editedItem.is_available
       }
       console.log(data)
-      await this.$store.dispatch('brands/addOffer', data);
+      if(this.editing){
+        await this.$store.dispatch('brands/editOffer', {data: data, id: this.editedItem.offer_id});
+
+      }else {
+        await this.$store.dispatch('brands/addOffer', data);
+
+      }
       this.close()
     },
 

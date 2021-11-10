@@ -113,7 +113,7 @@ export const actions = {
 
   async addMerchant({commit, dispatch}, data){
     await this.$axios.post('/api/merchants',data).then((res)=>{
-      if(res.status === 201){
+      if(res.status === 200){
         this.dispatch('brands/fetchMerchants')
       }
 
@@ -129,6 +129,15 @@ export const actions = {
     })
   },
 
+  async editOffer({commit, dispatch}, data){
+    await this.$axios.put('api/offers/'+data.id,data.data).then((res)=>{
+      if(res.status === 200){
+        this.dispatch('brands/fetchOffers')
+      }
+
+    })
+  },
+
   async addBrand({commit, dispatch}, data){
     await this.$axios.post('/api/brands',data).then((res)=>{
       console.log(res.status)
@@ -138,8 +147,29 @@ export const actions = {
 
     })
   },
+
+  async editBrand({commit, dispatch}, payload){
+    await this.$axios.put('/api/brands/'+payload.id, payload.data).then((res)=>{
+      console.log(res.status)
+      if(res.status === 201){
+        this.dispatch('brands/fetchBrands')
+      }
+
+    })
+  },
+
   async addBrandCategory({commit, dispatch}, data){
     await this.$axios.post('/api/brand/categories',data).then((res)=>{
+      console.log(res.status)
+      if(res.status === 201){
+        this.dispatch('brands/fetchCategories')
+      }
+
+    })
+  },
+
+  async editBrandCategory({commit, dispatch}, payload){
+    await this.$axios.put('/api/brand/categories/'+payload.id,payload.data).then((res)=>{
       console.log(res.status)
       if(res.status === 201){
         this.dispatch('brands/fetchCategories')

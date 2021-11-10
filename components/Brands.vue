@@ -151,6 +151,7 @@ export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
+    editing: false,
     headers: [
       {
         text: 'Title',
@@ -208,6 +209,7 @@ export default {
     },
 
     editItem(item) {
+      this.editing = true
       this.editedIndex = this.brands.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
@@ -255,8 +257,13 @@ export default {
 
 
         formData.append("data", data);
-        console.log(data)
-        await this.$store.dispatch('brands/addBrand', formData);
+
+        if (this.editing) {
+          await this.$store.dispatch('brands/editBrand', {data: formData, id: this.editedItem.brand_id});
+          this.editing = false
+        } else {
+          await this.$store.dispatch('brands/addBrand', formData);
+        }
       } else {
         console.log("You must upload a logo");
       }

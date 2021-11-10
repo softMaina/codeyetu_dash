@@ -139,6 +139,7 @@ export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
+    editing: false,
     headers: [
       {
         text: 'Title',
@@ -195,6 +196,7 @@ export default {
     },
 
     editItem(item) {
+      this.editing = true
       this.editedIndex = this.brand_categories.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
@@ -228,6 +230,9 @@ export default {
     },
 
     async save() {
+
+
+
       let data = JSON.stringify({
         'title': this.editedItem.title,
         'description': this.editedItem.description,
@@ -243,7 +248,15 @@ export default {
 
         formData.append("data", data);
         console.log(data)
-        await this.$store.dispatch('brands/addBrandCategory', formData);
+        // check if editing
+        if(this.editing){
+           let id = this.editedItem.id
+          await this.$store.dispatch('brands/editBrandCategory', {data: formData, id: id});
+           this.editing=false
+        }else{
+          await this.$store.dispatch('brands/addBrandCategory', formData);
+        }
+
       } else {
         console.log("You must upload a background Image");
       }
