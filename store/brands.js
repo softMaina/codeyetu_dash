@@ -6,6 +6,7 @@ export const state = () => ({
   total: 0,
   clicked_offer: null,
   merchants: [],
+  messageconfigs: [],
   brand_categories: []
 })
 
@@ -16,6 +17,7 @@ export const getters = {
   brands: state => state.brands,
   referrals: state => state.referrals,
   merchants: state => state.merchants,
+  messageconfigs: state => state.messageconfigs,
   brand_categories: state => state.brand_categories,
   total: state => state.total
 }
@@ -35,6 +37,9 @@ export const mutations = {
   },
   setMerchants(state, payload){
     state.merchants = payload.merchants
+  },
+  setMessageConfigs(state, payload){
+    state.messageconfigs = payload.messageconfigs
   },
   setCategories(state, payload){
     state.brand_categories = payload.brand_categories
@@ -101,6 +106,16 @@ export const actions = {
       })
     })
   },
+
+  async fetchMessageConfigs({commit, dispatch}) {
+    await this.$axios.get('/api/messageconfigs').then((res)=>{
+      console.log(res)
+      commit({
+        type: 'setMessageConfigs',
+        messageconfigs: res.data["results"]
+      })
+    })
+  },
   async fetchUsers({commit, dispatch}) {
     await this.$axios.get('/api/accounts').then((res)=>{
       console.log(res)
@@ -115,6 +130,15 @@ export const actions = {
     await this.$axios.post('/api/merchants',data).then((res)=>{
       if(res.status === 200){
         this.dispatch('brands/fetchMerchants')
+      }
+
+    })
+  },
+
+  async addMessageConfig({commit, dispatch}, data){
+    await this.$axios.post('/api/messageconfigs',data).then((res)=>{
+      if(res.status === 200){
+        this.dispatch('brands/fetchMessageConfigs')
       }
 
     })
@@ -183,6 +207,17 @@ export const actions = {
       console.log(res.status)
       if(res.status === 200){
         this.dispatch('brands/fetchOffers')
+      }
+
+    })
+  },
+
+  async deleteMessageConfig({commit, dispatch}, id){
+    let url = '/api/messageconfigs/' + id;
+    await this.$axios.delete(url).then((res)=>{
+      console.log(res.status)
+      if(res.status === 200){
+        this.dispatch('brands/fetchMessageConfigs')
       }
 
     })

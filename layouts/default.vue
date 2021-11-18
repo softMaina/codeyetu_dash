@@ -121,6 +121,11 @@ export default {
           icon: 'mdi-account-group-outline',
           title: 'Users',
           to: '/users'
+        },
+        {
+          icon: 'mdi-settings',
+          title: 'Message Config',
+          to: '/message_config'
         }
       ],
       miniVariant: false,
