@@ -5,6 +5,9 @@
       :items="users"
       class="elevation-1 thin-poppins"
     >
+      <template v-slot:item.date_joined="{item}">
+        {{ $moment(item.date_joined).calendar() }}
+      </template>
       <template v-slot:top>
         <v-toolbar
           flat

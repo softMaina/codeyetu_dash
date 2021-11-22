@@ -123,7 +123,7 @@ export default {
           to: '/users'
         },
         {
-          icon: 'mdi-settings',
+          icon: ' mdi-cog-sync-outline',
           title: 'Message Config',
           to: '/message_config'
         }
