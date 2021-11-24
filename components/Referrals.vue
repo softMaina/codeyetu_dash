@@ -168,7 +168,7 @@ export default {
       {text: 'Referred', value: 'referred_name', sortable: false},
       {text: 'Confirmed', value: 'is_used', sortable: false},
       {text: 'Date Referred', value: 'date_sent', sortable: true },
-      {text: 'Brand', value: 'brand'},
+      {text: 'Offer', value: 'offer.caption'},
       {text: 'Actions', value: 'actions', sortable: false},
     ],
     editedIndex: -1,
